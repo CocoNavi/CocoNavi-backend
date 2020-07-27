@@ -1,3 +1,9 @@
 from django.contrib import admin
+from . import models
 
-# Register your models here.
+
+@admin.register(models.Like)
+class LikeAdmin(admin.ModelAdmin):
+    class Meta:
+        order_by = ("-created")
+    list_display = ("user", "post")
