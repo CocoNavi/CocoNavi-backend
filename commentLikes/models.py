@@ -3,6 +3,9 @@ from core import models as core_models
 
 
 class CommentLike(core_models.TimeStampedModel):
+    #댓글좋아요
+
+    #좋아요를 누른 유저와 Target이 되는 댓글을 Foreignkey로 가진다
     user = models.ForeignKey("users.User",
                              on_delete=models.CASCADE,
                              related_name="commentLikes")

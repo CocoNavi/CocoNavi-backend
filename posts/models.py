@@ -3,6 +3,7 @@ from core import models as core_models
 
 class Photo(core_models.TimeStampedModel):
     """Photo Model Definition"""
+    #글에 해당하는 사진으로 사진파일과, 타겟이 되는 post를 foreignkey로 가진다.
     file = models.ImageField(upload_to="posts_photos")
     post = models.ForeignKey("posts.Post", on_delete=models.CASCADE, related_name="post_photos")
 
