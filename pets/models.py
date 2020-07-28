@@ -2,10 +2,12 @@ from django.db import models
 from core import models as core_models
 
 class Photo(core_models.TimeStampedModel):
+    #펫에 해당하는 사진으로 사진파일을 가지고, target이 되는 펫의 foreignkey를 가진다.
     file = models.ImageField(upload_to="pets_photos")
     pet = models.ForeignKey('pets.Pet', related_name='photos', on_delete=models.CASCADE)
 
 class Pet(core_models.TimeStampedModel):
+    #이름, 고 or 강, 생일, 성별, 종류, 소개, 공개여부를 필드로 가지고, 주인을 가지기 위해 user를 가리키는 foreign key를 하나 가진다.
     owner = models.ForeignKey("users.User", on_delete=models.CASCADE)
     name = models.CharField(max_length=10, unique=True)
     PET_CAT = "고양이"

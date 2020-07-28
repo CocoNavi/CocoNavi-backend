@@ -11,6 +11,7 @@ class Photo(core_models.TimeStampedModel):
 
 class Post(core_models.TimeStampedModel):
     """Custom Post Model"""
+    #제목, 내용, 고or강, 종류, 지역을 가지고. 글의 주인과 해당하는 게시판에 대한 foreignkey를 가진다.
     title = models.CharField(max_length=50)
     text = models.TextField(max_length=500)
     host = models.ForeignKey("users.User",
@@ -22,7 +23,7 @@ class Post(core_models.TimeStampedModel):
     PET_CAT = "고양이"
     PET_DOG = "강아지"
     PET_CHOICE = ((PET_CAT, "고양이"), (PET_DOG, "강아지"))
-    pet = models.CharField(choices=PET_CHOICE,
+    pet_kind = models.CharField(choices=PET_CHOICE,
                                     max_length=15,
                                     default=PET_DOG, null=True, blank=True)
     pet_age = models.IntegerField(blank=True, null=True)

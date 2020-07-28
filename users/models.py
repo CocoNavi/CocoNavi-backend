@@ -4,7 +4,7 @@ from core import models as core_models
 
 class User(AbstractUser):
     """Custom User Models"""
-
+    #로그인 방식과 별명, uid, 프로필사진을 가진다.
     LOGIN_GOOGLE = "Google"
     LOGIN_APPLE = "Apple"
     LOGIN_CHOICES = ((LOGIN_GOOGLE, "Google"), (LOGIN_APPLE, "Apple"))

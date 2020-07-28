@@ -3,6 +3,9 @@ from core import models as core_models
 
 
 class Comment(core_models.TimeStampedModel):
+    #댓글
+
+    #댓글 내용을 가지고, 댓글을 쓴 유저와, Target이 되는 post를 foreign key로 가진다.
     text = models.TextField(max_length=100)
     user = models.ForeignKey("users.User",
                              on_delete=models.CASCADE,
