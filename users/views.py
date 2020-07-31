@@ -32,7 +32,7 @@ def google_login(request):
                 login_method=login_method,
                 nickname=nickname,
             )
-            user.set_unusable_password()
+            user.set_unusable_password()  # 패스워드는 중요하지않아서 아무값이나 넣어줌(자동생성)
             user.save()
             response = {"result": "Create User"}
             return JsonResponse(response, status=201)
