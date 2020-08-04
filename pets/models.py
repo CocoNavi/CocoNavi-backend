@@ -19,7 +19,7 @@ class Pet(core_models.TimeStampedModel):
     pet_kinds = models.CharField(
         choices=PET_CHOICE, max_length=15, default=PET_DOG, null=True, blank=True
     )
-    birthday = models.CharField(max_length=10)
+    birthday = models.CharField(null=True, blank=True, max_length=10)
     GENDER_MALE = "MALE"
     GENDER_FEMALE = "FEMALE"
     GENDER_CHOICE = ((GENDER_MALE, "MALE"), (GENDER_FEMALE, "FEMALE"))
@@ -59,3 +59,17 @@ class Pet(core_models.TimeStampedModel):
 
     def __str__(self):
         return f"{self.owner.nickname}'s Pet {self.name}"
+
+    def serialize_custom(self):
+        data = {
+            "name": self.name,
+            "pet_avatar": str(self.pet_avatar),
+            "pet_kinds": self.pet_kinds,
+            "birthday": self.birthday,
+            "dog_kind": self.dog_kind,
+            "cat_kind": self.cat_kind,
+            "gender": self.gender,
+            "profile": self.profile,
+            "is_visible": self.is_visible,
+        }
+        return data

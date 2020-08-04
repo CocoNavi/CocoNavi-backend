@@ -17,4 +17,4 @@ class DayEvent(core_models.TimeStampedModel):
     date = models.CharField(max_length=2, default=1)
 
     def __str__(self):
-        return f"{self.user.nickname}'s {self.title} at {self.year}-{self.month}-{self.date}"
+        return f"{self.pet} {self.title} at {self.year}-{self.month}-{self.date}"
