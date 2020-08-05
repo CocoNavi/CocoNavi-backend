@@ -40,7 +40,42 @@ def add_events(request):  # 이벤트 추가하는 코드
 
 
 @method_decorator(csrf_exempt)
-def get_events_date(request):
+def revise_events(request):  # 이벤트 추가하는 코드
+    if request.method == "POST":
+        params_json = request.body.decode("utf8")
+        data_json = json.loads(params_json)  # 파라미터를 디코딩한 후 json 형태로 변환
+        print(data_json)
+        title = data_json["title"]
+        date = data_json["date"]
+        date_splited = date.split("-")
+        uid = data_json["uid"]
+        pet_name = data_json["pet_name"]
+        text = data_json["text"]
+        year = date_splited[0]
+        month = date_splited[1]
+        day = date_splited[2]
+        pk = data_json["pk"]
+        owner = user_models.User.objects.get(uid=uid)
+        pet = pet_models.Pet.objects.filter(owner=owner).get(name=pet_name)
+        # 여기부터 위의 정보를 가지고 이벤트 추가하는 코드 짜기
+        try:
+            event = event_models.DayEvent.objects.get(pk=pk)
+            event.pet = pet
+            event.title = title
+            event.text = text
+            event.year = year
+            event.month = month
+            event.date = day
+            event.save()
+            response = {"result": "Revise Event"}
+            return JsonResponse(response, status=201)
+        except event_models.DayEvent.DoesNotExist:
+            response = {"result": "Error"}
+            return JsonResponse(response, status=201)
+
+
+@method_decorator(csrf_exempt)
+def get_events_date(request):  # 각 날마다 해당하는 이벤트를 가져오는 부분
     params_json = request.body.decode("utf8")
     data_json = json.loads(params_json)  # 파라미터를 디코딩한 후 json 형태로 변환
     date = data_json["date"]
@@ -65,7 +100,7 @@ def get_events_date(request):
 
 
 @method_decorator(csrf_exempt)
-def get_events_month(request):
+def get_events_month(request):  # 캘린더 표시할때 month별 이벤트를 가져오는 코드
     params_json = request.body.decode("utf8")
     data_json = json.loads(params_json)  # 파라미터를 디코딩한 후 json 형태로 변환
     year = data_json["year"]

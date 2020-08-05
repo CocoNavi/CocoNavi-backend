@@ -6,14 +6,12 @@ from . import models
 
 @admin.register(models.User)
 class UserAdmin(UserAdmin):
-    fieldsets = UserAdmin.fieldsets + (("CustomProfile", {
-        "fields": (
-            "nickname",
-            "login_method",
-            "uid",
-            "avatar"
-        )
-    }), )
+    fieldsets = UserAdmin.fieldsets + (
+        (
+            "CustomProfile",
+            {"fields": ("nickname", "login_method", "uid", "avatar", "point")},
+        ),
+    )
 
     list_display = (
         "username",
@@ -24,5 +22,5 @@ class UserAdmin(UserAdmin):
 
     # def get_thumbnail(self, obj):
     #     return mark_safe(f"<img width=50px src='{obj.avatar.url}' />")
-    
+
     # get_thumbnail.short_description = "Thumbnail"

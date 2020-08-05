@@ -16,6 +16,7 @@ class User(AbstractUser):
     )
     uid = models.CharField(max_length=50, unique=True)
     avatar = models.ImageField(upload_to="users_photos", blank=True, null=True)
+    point = models.IntegerField(default=0)
 
     def serializeCustom(self):
         data = {
