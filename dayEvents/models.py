@@ -10,6 +10,9 @@ class DayEvent(core_models.TimeStampedModel):
     pet = models.ForeignKey(
         "pets.Pet", related_name="dayEvents", on_delete=models.CASCADE
     )
+    user = models.ForeignKey(
+        "users.User", related_name="dayEvents", on_delete=models.CASCADE
+    )
     title = models.CharField(max_length=20)
     text = models.TextField()
     year = models.CharField(max_length=4, default=1)
@@ -18,3 +21,24 @@ class DayEvent(core_models.TimeStampedModel):
 
     def __str__(self):
         return f"{self.pet} {self.title} at {self.year}-{self.month}-{self.date}"
+
+    def serialize_custom(self):
+        data = {
+            "pk": f"{self.pk}",
+            "pet_name": self.pet.name,
+            "title": self.title,
+            "text": self.text,
+            "date": f"{self.year}-{self.month}-{self.date}",
+        }
+        return data
+
+    def serialize_custom1(self):
+        data = {
+            "pk": f"{self.pk}",
+            "pet_name": self.pet.name,
+            "year": self.year,
+            "month": self.month,
+            "day": self.date,
+            "title": self.title,
+        }
+        return data

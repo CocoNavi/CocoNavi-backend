@@ -8,7 +8,7 @@ import json
 
 
 @method_decorator(csrf_exempt)
-def get_pets(request):
+def get_pets(request):  # 해당 유저의 펫을 가져오는 코드
     if request.method == "POST":
         params_json = request.body.decode("utf8")
         data_json = json.loads(params_json)  # 파라미터를 디코딩한 후 json 형태로 변환
@@ -17,11 +17,8 @@ def get_pets(request):
         try:
             # uid를 pk로 잡았기 때문에 이를 이용해 현재 데이터베이스에 request로 받은 uid에 해당하는 유저가 있는지 확인 !! -> 없으면 exception이 발생해서 exception부분으로 이동한다.
             user = user_models.User.objects.get(uid=uid)
-            pets = pet_models.Pet.objects.filter(owner=user).order_by("-created")
+            pets = pet_models.Pet.objects.filter(owner=user).order_by("created")
             pet_serialized = []
-            if len(pets) == 0:
-                return
-            print("pet : ", pet_serialized)
             for pet in pets:
                 pet_serialized.append(pet.serialize_custom())
             pets_json = json.dumps(pet_serialized)
@@ -32,7 +29,7 @@ def get_pets(request):
 
 
 @method_decorator(csrf_exempt)
-def add_pets(request):
+def add_pets(request):  # 펫을 추가하는 코드
     if request.method == "POST":
         params_json = request.body.decode("utf8")
         data_json = json.loads(params_json)  # 파라미터를 디코딩한 후 json 형태로 변환
