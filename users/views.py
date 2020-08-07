@@ -38,3 +38,24 @@ def google_login(request):
             user.save()
             response = {"result": "Create User"}
             return JsonResponse(response, status=201)
+
+
+@method_decorator(csrf_exempt)
+def get_user(request):
+    if request.method == "POST":
+        params_json = request.body.decode(
+            "utf8"
+        )  # 닉네임의 경우 한글로 된 경우가 많아서 이게 헥사 ? 값으로 들어오는데 이걸 다시 utf-8로 디코딩 해줌
+        data_json = json.loads(params_json)  # 파라미터를 디코딩한 후 json 형태로 변환
+        uid = data_json["uid"]
+        try:
+            user = user_models.User.objects.get(uid=uid)
+            response = {
+                "email": user.username,
+                "avatar": str(user.avatar),
+                "nickname": user.nickname,
+                "point": user.point,
+            }
+            return JsonResponse(response, status=201)
+        except user_models.User.DoesNotExist:
+            return

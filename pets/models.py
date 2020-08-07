@@ -41,8 +41,10 @@ class Pet(core_models.TimeStampedModel):
     dog_kind = models.CharField(choices=DOG_KINDS, max_length=15, null=True, blank=True)
 
     CAT_KINDS = (
+        ("코숏", "코숏"),
         ("스코티쉬폴드", "스코티쉬폴드"),
         ("러시안블루", "러시안블루"),
+        ("아메숏", "아메숏"),
         ("먼치킨", "먼치킨"),
         ("페르시안", "페르시안"),
         ("샴", "샴"),
